@@ -9,18 +9,24 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "user".
  *
- * @property integer $id
+ * @property int $id
  * @property string $username
+ * @property string $name
+ * @property string $surname
+ * @property string $group
+ * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
+ *
+ * @property Rating $rating
+ * @property UserQuest[] $userQuests
+ * @property Question[] $quests
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -48,11 +54,43 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['username', 'password_hash', 'email'], 'required'],
+            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'auth_key', 'email'], 'string', 'max' => 32],
+            [['name'], 'string', 'max' => 50],
+            [['surname', 'group'], 'string', 'max' => 255],
+            [['password_hash'], 'string', 'max' => 64],
+            [['password_reset_token'], 'string', 'max' => 128],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['password_reset_token'], 'unique'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'name' => Yii::t('app', 'Name'),
+            'surname' => Yii::t('app', 'Surname'),
+            'group' => Yii::t('app', 'Group'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 
@@ -136,4 +174,27 @@ class User extends ActiveRecord implements IdentityInterface
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRating()
+    {
+        return $this->hasOne(Rating::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserQuests()
+    {
+        return $this->hasMany(UserQuest::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getQuests()
+    {
+        return $this->hasMany(Question::className(), ['id' => 'quest_id'])->viaTable('user_quest', ['user_id' => 'id']);
+    }
 }
