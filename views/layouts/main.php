@@ -39,8 +39,8 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
-            ['label' => 'Создание заданий', 'url' => ['/question/index']],
-            ['label' => 'Рейтинг студентов', 'url' => ['/rating/index']],
+            ['label' => 'Профиль', 'url' => ['/profile/view']],
+
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
             ) : (
@@ -52,7 +52,7 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ),
         ],
     ]);
     NavBar::end();

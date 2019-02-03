@@ -4,21 +4,20 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\QuestionSearch */
+/* @var $searchModel app\models\search\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Questions');
+$this->title = Yii::t('app', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= $this->render('/_menu_profile'); ?>
-<div class="question-index">
+<div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Question'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -28,12 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'text_quest:ntext',
-            'code_quest:ntext',
-            'key_word:ntext',
-            'key_wrong_word:ntext',
-            //'point',
-            //'course_id',
+            'username',
+            'name',
+            'surname',
+            'group',
+            //'auth_key',
+            //'password_hash',
+            //'password_reset_token',
+            //'email:email',
+            //'points',
+            //'status',
             //'created_at',
             //'updated_at',
 

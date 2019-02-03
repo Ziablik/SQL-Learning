@@ -24,7 +24,9 @@ use yii\web\IdentityInterface;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property Rating $rating
+ * @property Course[] $courses
+ * @property Group[] $groups
+ * @property UserGroup[] $userGroups
  * @property UserQuest[] $userQuests
  * @property Question[] $quests
  */
@@ -177,9 +179,25 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRating()
+    public function getCourses()
     {
-        return $this->hasOne(Rating::className(), ['user_id' => 'id']);
+        return $this->hasMany(Course::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroups()
+    {
+        return $this->hasMany(Group::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserGroups()
+    {
+        return $this->hasMany(UserGroup::className(), ['user_id' => 'id']);
     }
 
     /**

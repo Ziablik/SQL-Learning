@@ -4,20 +4,21 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\RatingSearch */
+/* @var $searchModel app\models\search\CourseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Ratings');
+$this->title = Yii::t('app', 'Courses');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="rating-index">
+<?= $this->render('/_menu_profile'); ?>
+<div class="course-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Rating'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Course'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,8 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
+            'id',
+            'name_course',
             'user_id',
-            'points',
+            'created_at',
+            'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

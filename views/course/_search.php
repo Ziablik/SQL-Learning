@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\search\QuestionSearch */
+/* @var $model app\models\search\CourseSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="question-search">
+<div class="course-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -20,21 +20,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'text_quest') ?>
+    <?= $form->field($model, 'name_course') ?>
 
-    <?= $form->field($model, 'code_quest') ?>
+    <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'key_word') ?>
+    <?= $form->field($model, 'created_at') ?>
 
-    <?= $form->field($model, 'key_wrong_word') ?>
-
-    <?php // echo $form->field($model, 'point') ?>
-
-    <?php // echo $form->field($model, 'course_id') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
+    <?= $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

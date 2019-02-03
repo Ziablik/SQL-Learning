@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Rating;
+use app\models\Question;
 
 /**
- * RatingSearch represents the model behind the search form of `app\models\Rating`.
+ * QuestionSearch represents the model behind the search form of `app\models\Question`.
  */
-class RatingSearch extends Rating
+class QuestionSearch extends Question
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,8 @@ class RatingSearch extends Rating
     public function rules()
     {
         return [
-            [['user_id', 'points'], 'integer'],
+            [['id', 'point', 'course_id', 'created_at', 'updated_at'], 'integer'],
+            [['text_quest', 'code_quest', 'key_word', 'key_wrong_word'], 'safe'],
         ];
     }
 
@@ -39,7 +40,7 @@ class RatingSearch extends Rating
      */
     public function search($params)
     {
-        $query = Rating::find();
+        $query = Question::find();
 
         // add conditions that should always apply here
 
@@ -57,9 +58,17 @@ class RatingSearch extends Rating
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'user_id' => $this->user_id,
-            'points' => $this->points,
+            'id' => $this->id,
+            'point' => $this->point,
+            'course_id' => $this->course_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'text_quest', $this->text_quest])
+            ->andFilterWhere(['like', 'code_quest', $this->code_quest])
+            ->andFilterWhere(['like', 'key_word', $this->key_word])
+            ->andFilterWhere(['like', 'key_wrong_word', $this->key_wrong_word]);
 
         return $dataProvider;
     }

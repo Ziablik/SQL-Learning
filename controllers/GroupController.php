@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Rating;
-use app\models\RatingSearch;
+use app\models\Group;
+use app\models\search\GroupSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * RatingController implements the CRUD actions for Rating model.
+ * GroupController implements the CRUD actions for Group model.
  */
-class RatingController extends Controller
+class GroupController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class RatingController extends Controller
     }
 
     /**
-     * Lists all Rating models.
+     * Lists all Group models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new RatingSearch();
+        $searchModel = new GroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class RatingController extends Controller
     }
 
     /**
-     * Displays a single Rating model.
+     * Displays a single Group model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,16 +58,16 @@ class RatingController extends Controller
     }
 
     /**
-     * Creates a new Rating model.
+     * Creates a new Group model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Rating();
+        $model = new Group();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->user_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -76,7 +76,7 @@ class RatingController extends Controller
     }
 
     /**
-     * Updates an existing Rating model.
+     * Updates an existing Group model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -87,7 +87,7 @@ class RatingController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->user_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -96,7 +96,7 @@ class RatingController extends Controller
     }
 
     /**
-     * Deletes an existing Rating model.
+     * Deletes an existing Group model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class RatingController extends Controller
     }
 
     /**
-     * Finds the Rating model based on its primary key value.
+     * Finds the Group model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Rating the loaded model
+     * @return Group the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Rating::findOne($id)) !== null) {
+        if (($model = Group::findOne($id)) !== null) {
             return $model;
         }
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Question;
+use app\models\Group;
 
 /**
- * QuestionSearch represents the model behind the search form of `app\models\Question`.
+ * GroupSearch represents the model behind the search form of `app\models\Group`.
  */
-class QuestionSearch extends Question
+class GroupSearch extends Group
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class QuestionSearch extends Question
     public function rules()
     {
         return [
-            [['id', 'point'], 'integer'],
-            [['text_quest', 'code_quest', 'key_word', 'key_wrong_word'], 'safe'],
+            [['id', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['name_group', 'key'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class QuestionSearch extends Question
      */
     public function search($params)
     {
-        $query = Question::find();
+        $query = Group::find();
 
         // add conditions that should always apply here
 
@@ -59,13 +59,13 @@ class QuestionSearch extends Question
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'point' => $this->point,
+            'user_id' => $this->user_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'text_quest', $this->text_quest])
-            ->andFilterWhere(['like', 'code_quest', $this->code_quest])
-            ->andFilterWhere(['like', 'key_word', $this->key_word])
-            ->andFilterWhere(['like', 'key_wrong_word', $this->key_wrong_word]);
+        $query->andFilterWhere(['like', 'name_group', $this->name_group])
+            ->andFilterWhere(['like', 'key', $this->key]);
 
         return $dataProvider;
     }

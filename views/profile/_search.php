@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\search\QuestionSearch */
+/* @var $model app\models\search\UserSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="question-search">
+<div class="user-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -20,17 +20,25 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'text_quest') ?>
+    <?= $form->field($model, 'username') ?>
 
-    <?= $form->field($model, 'code_quest') ?>
+    <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'key_word') ?>
+    <?= $form->field($model, 'surname') ?>
 
-    <?= $form->field($model, 'key_wrong_word') ?>
+    <?= $form->field($model, 'group') ?>
 
-    <?php // echo $form->field($model, 'point') ?>
+    <?php // echo $form->field($model, 'auth_key') ?>
 
-    <?php // echo $form->field($model, 'course_id') ?>
+    <?php // echo $form->field($model, 'password_hash') ?>
+
+    <?php // echo $form->field($model, 'password_reset_token') ?>
+
+    <?php // echo $form->field($model, 'email') ?>
+
+    <?php // echo $form->field($model, 'points') ?>
+
+    <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
