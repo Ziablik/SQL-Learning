@@ -51,11 +51,13 @@ class Question extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'text_quest' => Yii::t('app', 'Text Quest'),
-            'code_quest' => Yii::t('app', 'Code Quest'),
-            'key_word' => Yii::t('app', 'Key Word'),
-            'key_wrong_word' => Yii::t('app', 'Key Wrong Word'),
-            'point' => Yii::t('app', 'Point'),
+            'text_quest' => Yii::t('app', 'Текст практической задачи'),
+            'code_quest' => Yii::t('app', 'Эталонный код'),
+            'key_word' => Yii::t('app', 'Ключивые слова'),
+            'key_wrong_word' => Yii::t('app', 'Запрещенные ключевые слова'),
+            'point' => Yii::t('app', 'Количество баллов за задачу'),
+            'user' => 'Автор задачи',
+            'course' => 'Курс задачи',
             'course_id' => Yii::t('app', 'Course ID'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

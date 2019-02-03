@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Question;
 use app\models\search\QuestionSearch;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -33,11 +34,11 @@ class QuestionController extends Controller
      * Lists all Question models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id =1)
     {
         $searchModel = new QuestionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->query = $dataProvider->query->where(['course_id' => $id]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
