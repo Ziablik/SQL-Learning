@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\search\CourseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Courses');
+$this->title = Yii::t('app', 'Мои курсы');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= $this->render('/_menu_profile'); ?>
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Course'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Создать курс'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,11 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
             'name_course',
-            'user_id',
-            'created_at',
-            'updated_at',
+            [
+                    'attribute' => 'user',
+                    'value' => 'user.username'
+],
+//            'user_id',
+//            'created_at',
+//            'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

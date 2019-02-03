@@ -49,9 +49,10 @@ class Group extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name_group' => Yii::t('app', 'Name Group'),
+            'name_group' => Yii::t('app', 'Название группы'),
             'user_id' => Yii::t('app', 'User ID'),
             'key' => Yii::t('app', 'Key'),
+            'user' => 'Создатель группы',
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];

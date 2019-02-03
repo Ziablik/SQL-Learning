@@ -11,6 +11,8 @@ use app\models\Group;
  */
 class GroupSearch extends Group
 {
+    public $user;
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class GroupSearch extends Group
     {
         return [
             [['id', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['name_group', 'key'], 'safe'],
+            [['name_group', 'key', 'user'], 'safe'],
         ];
     }
 
@@ -41,12 +43,18 @@ class GroupSearch extends Group
     public function search($params)
     {
         $query = Group::find();
+        $query->joinWith('user');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['user'] = [
+            'asc' => ['user.username' => SORT_ASC],
+            'desc' => ['user.username' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -65,6 +73,7 @@ class GroupSearch extends Group
         ]);
 
         $query->andFilterWhere(['like', 'name_group', $this->name_group])
+            ->andFilterWhere(['like', 'user.username', $this->user])
             ->andFilterWhere(['like', 'key', $this->key]);
 
         return $dataProvider;

@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+<!--    --><?//= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'username') ?>
 
@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'surname') ?>
 
-    <?= $form->field($model, 'group') ?>
+<!--    --><?//= $form->field($model, 'group') ?>
 
     <?php // echo $form->field($model, 'auth_key') ?>
 
@@ -34,7 +34,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'password_reset_token') ?>
 
-    <?php // echo $form->field($model, 'email') ?>
+    <?php  echo $form->field($model, 'email') ?>
 
     <?php // echo $form->field($model, 'points') ?>
 

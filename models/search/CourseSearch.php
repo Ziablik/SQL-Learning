@@ -11,6 +11,8 @@ use app\models\Course;
  */
 class CourseSearch extends Course
 {
+    public $user;
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class CourseSearch extends Course
     {
         return [
             [['id', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['name_course'], 'safe'],
+            [['name_course', 'user'], 'safe'],
         ];
     }
 
@@ -41,12 +43,18 @@ class CourseSearch extends Course
     public function search($params)
     {
         $query = Course::find();
+        $query->joinWith('user');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['user'] = [
+            'asc' => ['user.username' => SORT_ASC],
+            'desc' => ['user.username' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -64,7 +72,8 @@ class CourseSearch extends Course
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name_course', $this->name_course]);
+        $query->andFilterWhere(['like', 'name_course', $this->name_course])
+            ->andFilterWhere(['like', 'user.username', $this->user]);
 
         return $dataProvider;
     }

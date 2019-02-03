@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\search\GroupSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Groups');
+$this->title = Yii::t('app', 'Мои группы');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= $this->render('/_menu_profile'); ?>
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Group'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Создать группу'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,11 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
             'name_group',
-            'user_id',
-            'key',
-            'created_at',
+            [
+                'attribute' => 'user',
+                'value' => 'user.username'
+],
+//            'key',
+//            'created_at',
             //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

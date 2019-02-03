@@ -44,11 +44,11 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
-            'enablePrettyUrl' => true,
+            'enablePrettyUrl' => false,
             'showScriptName' => true,
             'rules' => [
-//                '/' => 'site/index',
-//                '<action:\w+>' => 'site/<action>',
+                '<action>' => 'site/<action>',
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
             ],
         ],
     ],

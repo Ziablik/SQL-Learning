@@ -48,8 +48,9 @@ class Course extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name_course' => Yii::t('app', 'Name Course'),
+            'name_course' => Yii::t('app', 'Название курса'),
             'user_id' => Yii::t('app', 'User ID'),
+            'user' => 'Автор курса',
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
