@@ -10,6 +10,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\SignupForm;
+use app\models\Question;
 
 class SiteController extends Controller
 {
@@ -122,9 +123,22 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionAbout()
+    public function actionComplete($id = 1)
     {
-        return $this->render('about');
+        $quest = Question::findOne(['id' => $id]);
+        if($quest->load(Yii::$app->request->post()) && $quest->validate())
+        {
+            $resultText = $quest->check($quest->codeByStudent);
+            return $this->render('complete', [
+                'quest' => $quest,
+                'resultText' => $resultText,
+            ]);
+        }
+
+//        VarDumper::dump($quest, 10 ,true);
+        return $this->render('complete', [
+            'quest' => $quest,
+        ]);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\VarDumper;
 
 /**
  * This is the model class for table "question".
@@ -16,6 +17,7 @@ use Yii;
  * @property int $course_id
  * @property int $created_at
  * @property int $updated_at
+ * @property string $codeByStudent
  *
  * @property Course $course
  * @property UserQuest[] $userQuests
@@ -23,6 +25,9 @@ use Yii;
  */
 class Question extends \yii\db\ActiveRecord
 {
+    public $codeByStudent;
+    public $wrongWordList = ['DELETE' , 'UPDATE', 'INSERT', 'DROP'];
+
     /**
      * {@inheritdoc}
      */
@@ -38,7 +43,7 @@ class Question extends \yii\db\ActiveRecord
     {
         return [
             [['text_quest', 'code_quest'], 'required'],
-            [['text_quest', 'code_quest', 'key_word', 'key_wrong_word'], 'string'],
+            [['text_quest', 'code_quest', 'key_word', 'key_wrong_word', 'codeByStudent'], 'string'],
             [['point', 'course_id', 'created_at', 'updated_at'], 'integer'],
             [['course_id'], 'exist', 'skipOnError' => true, 'targetClass' => Course::className(), 'targetAttribute' => ['course_id' => 'id']],
         ];
@@ -59,6 +64,7 @@ class Question extends \yii\db\ActiveRecord
             'user' => 'Автор задачи',
             'course' => 'Курс задачи',
             'course_id' => Yii::t('app', 'Course ID'),
+            'codeByStudent' => 'Форма для ввода sql-кода',
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
@@ -87,4 +93,77 @@ class Question extends \yii\db\ActiveRecord
     {
         return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_quest', ['quest_id' => 'id']);
     }
+
+    public function check($codeByStudent)
+    {
+        foreach ($this->wrongWordList as $item)
+        {
+            if(stripos($codeByStudent, $item) != false)
+            {
+                VarDumper::dump(false,10,true);
+                return 'Вы использовали недопустимые слова';
+            }
+        }
+
+        return $this->checkRightWords($codeByStudent);
+    }
+
+    public function checkRightWords($codeByStudent)
+    {
+        if(empty($this->key_word))
+        {
+            return $this->createTables($codeByStudent);
+        }
+        $list = str_replace(',', '', $this->key_word);
+        $list = explode(' ', $list);
+//        VarDumper::dump($codeByStudent,10,true);
+//        VarDumper::dump($list,10,true);
+//        VarDumper::dump(stripos($codeByStudent, 'select'));
+//        VarDumper::dump((0 === false),10, true);
+        foreach ($list as $item)
+        {
+//            VarDumper::dump($item,10,true);
+//            VarDumper::dump(stripos($codeByStudent,$item),10,true);
+            if(stripos($codeByStudent, $item) === false)
+            {
+//                VarDumper::dump(false,10,true);
+                return 'Вы не использовали слова, необходимые для решение практического задания';
+            }
+        }
+
+        return $this->createTables($codeByStudent);
+
+    }
+
+    public function createTables($codeByStudent)
+    {
+
+        $tableByStudent = Yii::$app->computer_company->createCommand($codeByStudent)->queryAll();
+        $tableByTeacher = Yii::$app->computer_company->createCommand($this->code_quest)->queryAll();
+        return $this->checkTables($tableByStudent, $tableByTeacher);
+
+    }
+
+    public function checkTables($tableByStudent, $tableByTeacher)
+    {
+//        VarDumper::dump($tableByTeacher == $tableByStudent,10, true);
+        if($tableByStudent == $tableByTeacher)
+        {
+            return 'Все правильно!!!';
+        }
+        else
+        {
+            return 'Решение не верное';
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }
