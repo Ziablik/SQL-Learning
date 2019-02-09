@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Exception;
 use yii\helpers\VarDumper;
 
 /**
@@ -98,10 +99,11 @@ class Question extends \yii\db\ActiveRecord
     {
         foreach ($this->wrongWordList as $item)
         {
-            if(stripos($codeByStudent, $item) != false)
+            if(stripos($codeByStudent, $item) != false || stripos($codeByStudent, $item) === 0)
             {
-                VarDumper::dump(false,10,true);
-                return 'Вы использовали недопустимые слова';
+//                VarDumper::dump(Yii::$app->session->setFlash('error', 'Вы использовали не допустимые слова (*_*)'),10,true);
+//                VarDumper::dump(YIi::$app->session,10,true);
+                return Yii::$app->session->setFlash('error', 'Вы использовали не допустимые слова (*_*)');
             }
         }
 
@@ -127,7 +129,7 @@ class Question extends \yii\db\ActiveRecord
             if(stripos($codeByStudent, $item) === false)
             {
 //                VarDumper::dump(false,10,true);
-                return 'Вы не использовали слова, необходимые для решение практического задания';
+                return Yii::$app->session->setFlash('error', 'Вы не использовали слова, необходимые для решение практического задания');
             }
         }
 
@@ -137,8 +139,13 @@ class Question extends \yii\db\ActiveRecord
 
     public function createTables($codeByStudent)
     {
-
-        $tableByStudent = Yii::$app->computer_company->createCommand($codeByStudent)->queryAll();
+        try{
+            $tableByStudent = Yii::$app->computer_company->createCommand($codeByStudent)->queryAll();
+        }
+        catch(Exception $e){
+            return Yii::$app->session->setFlash('error', $e->getMessage());
+//            VarDumper::dump($e->getMessage(),10,true);
+        };
         $tableByTeacher = Yii::$app->computer_company->createCommand($this->code_quest)->queryAll();
         return $this->checkTables($tableByStudent, $tableByTeacher);
 
@@ -149,11 +156,11 @@ class Question extends \yii\db\ActiveRecord
 //        VarDumper::dump($tableByTeacher == $tableByStudent,10, true);
         if($tableByStudent == $tableByTeacher)
         {
-            return 'Все правильно!!!';
+            Yii::$app->session->setFlash('success','Все верно!!!');
         }
         else
         {
-            return 'Решение не верное';
+            Yii::$app->session->setFlash('error','Решение не верное, посмотрите на результаты и попробуйте еще раз');
         }
     }
 

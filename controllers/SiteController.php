@@ -117,28 +117,4 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionComplete($id = 1)
-    {
-        $quest = Question::findOne(['id' => $id]);
-        if($quest->load(Yii::$app->request->post()) && $quest->validate())
-        {
-            $resultText = $quest->check($quest->codeByStudent);
-            return $this->render('complete', [
-                'quest' => $quest,
-                'resultText' => $resultText,
-            ]);
-        }
-
-//        VarDumper::dump($quest, 10 ,true);
-        return $this->render('complete', [
-            'quest' => $quest,
-        ]);
-    }
-
 }

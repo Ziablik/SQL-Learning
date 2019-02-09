@@ -2,9 +2,11 @@
 
 namespace app\models\search;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Course;
+use yii\helpers\VarDumper;
 
 /**
  * CourseSearch represents the model behind the search form of `app\models\Course`.
@@ -43,8 +45,8 @@ class CourseSearch extends Course
     public function search($params)
     {
         $query = Course::find();
-        $query->joinWith('user');
-
+        $query->joinWith('user')
+            ->where(['user_id' => Yii::$app->user->id]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

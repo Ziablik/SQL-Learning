@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $user_id
  * @property int $quest_id
- * @property string $complete_quest
  *
  * @property Question $quest
  * @property User $user
@@ -32,7 +31,6 @@ class UserQuest extends \yii\db\ActiveRecord
         return [
             [['user_id', 'quest_id'], 'required'],
             [['user_id', 'quest_id'], 'integer'],
-            [['complete_quest'], 'string', 'max' => 255],
             [['user_id', 'quest_id'], 'unique', 'targetAttribute' => ['user_id', 'quest_id']],
             [['quest_id'], 'exist', 'skipOnError' => true, 'targetClass' => Question::className(), 'targetAttribute' => ['quest_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -47,7 +45,6 @@ class UserQuest extends \yii\db\ActiveRecord
         return [
             'user_id' => Yii::t('app', 'User ID'),
             'quest_id' => Yii::t('app', 'Quest ID'),
-            'complete_quest' => Yii::t('app', 'Complete Quest'),
         ];
     }
 

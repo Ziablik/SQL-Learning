@@ -39,7 +39,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
-            ['label' => 'Выполнение заданий', 'url' => ['/site/complete']],
+            ['label' => 'Выполнение заданий', 'url' => ['/question/complete']],
 
 //            ['label' => 'Профиль', 'url' => ['/profile/view']],
 

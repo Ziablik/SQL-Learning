@@ -125,4 +125,27 @@ class QuestionController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    /**
+     * Displays complete page.
+     *
+     * @return string
+     */
+    public function actionComplete($id = 1)
+    {
+        $quest = Question::findOne(['id' => $id]);
+        if($quest->load(Yii::$app->request->post()) && $quest->validate())
+        {
+            $resultText = $quest->check($quest->codeByStudent);
+            return $this->render('complete', [
+                'quest' => $quest,
+                'resultText' => $resultText,
+            ]);
+        }
+
+//        VarDumper::dump($quest, 10 ,true);
+        return $this->render('complete', [
+            'quest' => $quest,
+        ]);
+    }
 }
