@@ -117,4 +117,36 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
+    public function actionAjaxLogin() {
+        if (Yii::$app->request->isAjax) {
+            $model = new LoginForm();
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->login()) {
+                    return $this->goBack();
+                } else {
+                    Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                    return \yii\widgets\ActiveForm::validate($model);
+                }
+            }
+        } else {
+            throw new \HttpException(404 ,'Page not found');
+        }
+    }
+
+
+    public function actionAjaxSignup() {
+        if (Yii::$app->request->isAjax) {
+            $model = new SignupForm();
+            if ($model->load(Yii::$app->request->post())) {
+                if ($user = $model->signup()) {
+                    if (Yii::$app->getUser()->login($user)) {
+                        return $this->goHome();
+                    }
+                }
+            }
+        } else {
+            throw new \HttpException(404 ,'Page not found');
+        }
+    }
 }

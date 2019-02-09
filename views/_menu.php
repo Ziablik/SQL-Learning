@@ -1,8 +1,12 @@
 <?php
 
 use yii\widgets\Menu;
+use app\widgets\LoginFormWidget;
+use app\widgets\SignupFormWidget;
 
 ?>
+
+
 <div class="row">
     <div class="col-md-12">
         <?=
@@ -11,8 +15,8 @@ use yii\widgets\Menu;
                 'class' => 'nav nav-tabs',
             ],
             'items' => [
-                ['label' => 'Вход', 'url' => ['/site/login']],
-                ['label' => 'Регистрация', 'url' => ['/site/signup']],
+                ['label' => 'Login', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']],
+                ['label' => 'Signup', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#signup-modal']],
             ],
         ]);
         ?>

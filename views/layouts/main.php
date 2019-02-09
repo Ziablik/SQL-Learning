@@ -9,6 +9,8 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\widgets\LoginFormWidget;
+use app\widgets\SignupFormWidget;
 
 AppAsset::register($this);
 ?>
@@ -25,6 +27,8 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+<?= (Yii::$app->user->isGuest ? LoginFormWidget::widget([]) : ''); ?>
+<?= (Yii::$app->user->isGuest ? SignupFormWidget::widget([]) : ''); ?>
 
 <div class="wrap">
     <?php
@@ -40,11 +44,14 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
             ['label' => 'Выполнение заданий', 'url' => ['/question/complete']],
+            ['label' => 'Профиль', 'url' => ['/profile/view']],
+//            ['label' => 'Signup', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#signup-modal']],
+
 
 //            ['label' => 'Профиль', 'url' => ['/profile/view']],
 
             Yii::$app->user->isGuest ? (
-                ['label' => 'Вход', 'url' => ['/site/login']]
+            ['label' => 'Login', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
