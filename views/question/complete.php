@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Выполнение заданий';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">-->
 <div class="site-about">
     <div class="row">
         Краткая информация о базе данных "Компьютерная фирма":
@@ -62,8 +63,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-lg-6" id="tableByStudent">
-            <table class="table">
-                <thead>
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-inverse">
+                    <th>#</th>
                     <?php
                         foreach ($tableByStudent[0] as $key => $value)
                         {
@@ -73,14 +75,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 </thead>
                 <tbody>
                     <?php
+                        $rowNumber = 1;
                         foreach($tableByStudent as $row)
                         {
                             echo '<tr>';
+                            echo '<th scope="row">'. $rowNumber .'</th>';
                             foreach ($row as $key => $value)
                             {
                                 echo '<td>'. $value .'</td>';
                             }
                             echo '</tr>';
+                            $rowNumber = $rowNumber + 1;
                         }
                     ?>
                 </tbody>
@@ -88,27 +93,31 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="col-lg-6" id="tableByTeacher">
-            <table class="table">
-                <thead>
-                <?php
-                foreach ($tableByTeacher[0] as $key => $value)
-                {
-                    echo '<th>'. $key .'</th>';
-                }
-                ?>
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-inverse">
+                    <th>#</th>
+                    <?php
+                        foreach ($tableByTeacher[0] as $key => $value)
+                        {
+                            echo '<th>'. $key .'</th>';
+                        }
+                    ?>
                 </thead>
                 <tbody>
-                <?php
-                foreach($tableByTeacher as $row)
-                {
-                    echo '<tr>';
-                    foreach ($row as $key => $value)
-                    {
-                        echo '<td>'. $value .'</td>';
-                    }
-                    echo '</tr>';
-                }
-                ?>
+                    <?php
+                        $rowNumber = 1;
+                        foreach($tableByTeacher as $row)
+                        {
+                            echo '<tr>';
+                            echo '<th scope="row">'. $rowNumber .'</th>';
+                            foreach ($row as $key => $value)
+                            {
+                                echo '<td>'. $value .'</td>';
+                            }
+                            echo '</tr>';
+                            $rowNumber = $rowNumber + 1;
+                        }
+                    ?>
                 </tbody>
             </table>
         </div>
