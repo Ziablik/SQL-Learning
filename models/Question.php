@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\db\Exception;
 use yii\helpers\VarDumper;
 
@@ -153,20 +156,18 @@ class Question extends \yii\db\ActiveRecord
 
     public function checkTables($tableByStudent, $tableByTeacher)
     {
-//        VarDumper::dump($tableByTeacher == $tableByStudent,10, true);
+//        VarDumper::dump([$tableByStudent, $tableByTeacher],10, true);
         if($tableByStudent == $tableByTeacher)
         {
             Yii::$app->session->setFlash('success','Все верно!!!');
+            return [$tableByStudent, $tableByTeacher];
         }
         else
         {
             Yii::$app->session->setFlash('error','Решение не верное, посмотрите на результаты и попробуйте еще раз');
+            return [$tableByStudent, $tableByTeacher];
         }
     }
-
-
-
-
 
 
 

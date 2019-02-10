@@ -134,12 +134,15 @@ class QuestionController extends Controller
     public function actionComplete($id = 1)
     {
         $quest = Question::findOne(['id' => $id]);
+//        VarDumper::dump($quest,10,true);
         if($quest->load(Yii::$app->request->post()) && $quest->validate())
         {
-            $resultText = $quest->check($quest->codeByStudent);
+            $tables = $quest->check($quest->codeByStudent);
+//            VarDumper::dump($providers,10,true);
             return $this->render('complete', [
                 'quest' => $quest,
-                'resultText' => $resultText,
+                'tableByStudent' => $tables[0],
+                'tableByTeacher' => $tables[1],
             ]);
         }
 

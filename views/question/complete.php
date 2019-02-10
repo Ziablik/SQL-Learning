@@ -50,20 +50,75 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+
     <div class="row">
-        <h2 class="text-center">
+        <div class="col-lg-6">
+            <h3>Результат вашего кода</h3>
+        </div>
+        <div class="col-lg-6">
+            <h3>Реузльтат эталонного кода</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6" id="tableByStudent">
+            <table class="table">
+                <thead>
+                    <?php
+                        foreach ($tableByStudent[0] as $key => $value)
+                        {
+                            echo '<th>'. $key .'</th>';
+                        }
+                    ?>
+                </thead>
+                <tbody>
+                    <?php
+                        foreach($tableByStudent as $row)
+                        {
+                            echo '<tr>';
+                            foreach ($row as $key => $value)
+                            {
+                                echo '<td>'. $value .'</td>';
+                            }
+                            echo '</tr>';
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-lg-6" id="tableByTeacher">
+            <table class="table">
+                <thead>
+                <?php
+                foreach ($tableByTeacher[0] as $key => $value)
+                {
+                    echo '<th>'. $key .'</th>';
+                }
+                ?>
+                </thead>
+                <tbody>
+                <?php
+                foreach($tableByTeacher as $row)
+                {
+                    echo '<tr>';
+                    foreach ($row as $key => $value)
+                    {
+                        echo '<td>'. $value .'</td>';
+                    }
+                    echo '</tr>';
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+
             <!--            --><?php //if( Yii::$app->session->hasFlash('error') ): ?>
             <!--                <div class="alert alert-error alert-dismissible" role="alert">-->
             <!--                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
             <!--                    --><?php //echo Yii::$app->session->getFlash('error'); ?>
             <!--                </div>-->
             <!--            --><?php //endif;?>
-            <?php
-            if(!empty($resultText))
-            {
-                echo $resultText;
-            }
-            ?>
-        </h2>
+
     </div>
 </div>
